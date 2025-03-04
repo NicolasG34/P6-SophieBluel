@@ -127,7 +127,23 @@ li:hover {
 }
 
 .filters{
-	width: 100%;
+	width: 50%;
+	display: flex;
+	justify-content:space-evenly;
+	margin: 45px auto;
+}
+
+.filter{
+	padding: 10px 20px;
+	border:1px solid #1D6154;
+	border-radius: 25px;
+	font-family: 'Syne';
+	color: #1D6154;
+}
+
+.filter:hover{
+	background-color: #1D6154;
+	color: white;
 }
 
 .gallery {

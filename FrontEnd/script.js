@@ -28,18 +28,19 @@ fetch(apiURL + "works")
     //const all = document.createElement("all");
     data.forEach(category => {
         const filter = document.createElement("div");
-        filter.classList.add("filters");
+        filter.classList.add("filter");
+        filter.innerHTML =category.name;
         //filter.setAttribute("name", "filter");
 
         //filter.src= category.name;
-        let names = filter.innerText;
-        names.src=category.name; 
+        //const names = filter.innerText;
+        //names.src=category.name; 
 
         categories.appendChild(filter);
     });
     console.log(categories);
-
-    
-
 })
+
+
+
 
