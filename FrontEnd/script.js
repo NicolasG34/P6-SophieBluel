@@ -1,5 +1,6 @@
 const apiURL = "http://localhost:5678/api/";
 
+//Récupération des travaux depuis l'API
 fetch(apiURL + "works")
     .then((response) => { return response.json() })
     .then((data) => {
@@ -23,19 +24,21 @@ fetch(apiURL + "works")
             console.log(categoryIdImage);
             console.log(categoryIdImage.dataset);
         });
-        console.log(gallery);
-
     })
+
+    //Rédupération des catégories depuis l'API
 fetch(apiURL + "categories")
     .then((response) => { return response.json() })
     .then((data) => {
         const categories = document.querySelector(".filters");
+        //Ajout des filtres pour chaque catégorie
         data.forEach(category => {
             const filter = document.createElement("div");
             filter.classList.add("filter");
             filter.innerHTML = category.name;
             categories.appendChild(filter);
             filter.setAttribute("data-id", category.id);
+            //Actionnement filtres au click
             filter.addEventListener("click", function (event) {
                 console.log(event);
                 const works = document.getElementsByClassName("workImg");
@@ -45,47 +48,25 @@ fetch(apiURL + "categories")
                     const filterCatId =event.target.dataset.id;
                     if (filterCatId !== workCatId){
                         work.style.display="none";
-                        console.log("toto");
+                    }
+                    else{
+                        work.style.display="block";
                     }
                 })
             })
         });
-        console.log(categories);
+        //Actionnement du filtre All
+        const all = document.getElementById("all");
+        console.log(all);
+        all.addEventListener("click", function (event) {
+                const works = document.getElementsByClassName("workImg");
+                console.log(works);
+                Array.from(works).forEach((work)=>{
+                    work.style.display="block";
+                })
+                   
+        })
     })
-
-
-
-
-
-/*.then((data) => {
-    const categories = document.querySelector(".filters");
-    const filters = []; // create a new array that will contain all filter
-    data.forEach(category => {
-        const filter = document.createElement("div");
-        filter.classList.add("filter");
-        filter.innerHTML = category.name;
-        filter.dataset.categoryId = category.id; // Add category id as a data attribute
-        categories.appendChild(filter);
-        filters.push(filter); // push the element in the array
-    });
-
-    //add the listener after the elements are created.
-    filters.forEach(filter => {
-        filter.addEventListener("click", function() {
-            const categoryId = this.dataset.categoryId;// get the category id
-            const imageFiltrees = work.filter((idFiltre) => idFiltre.categoryId== categoryId);
-            console.log(imageFiltrees);
-        });
-    })
-
-    console.log(categories);
-})*/
-
-/*filter.addEventListener("click", function() {
-    const imageFiltrees = work.filter((idFiltre) => category.id==work.categoryId);
-})
-console.log(imageFiltrees); */
-
 
 
 
