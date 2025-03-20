@@ -1,8 +1,8 @@
 const apiLogin = "http://localhost:5678/api/users/login";
 
-document.getElementById("loginForm").addEventListener("submit", Connexion);
+document.getElementById("loginForm").addEventListener("submit", connexion);
 
-async function Connexion(event) {
+async function connexion(event) {
   event.preventDefault();
 
   // Get user input
@@ -27,7 +27,7 @@ async function Connexion(event) {
       body: JSON.stringify(user),
     });
 
-    if (response.status !== 200) {
+    if (!response.ok) {
       const errorMessage = document.createElement("div");
       errorMessage.className = "error-login";
       errorMessage.innerHTML = "Veuillez vérifier votre email et/ou votre mot de passe";
