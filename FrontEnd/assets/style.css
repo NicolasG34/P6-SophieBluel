@@ -101,12 +101,9 @@ margin-top: 60px;
 
 .projets-container {
     display: flex;
-    justify-content: center; /* Pour aligner verticalement les éléments */
-    gap: 10px; /* Pour ajouter un espace entre les éléments, si nécessaire */
+    justify-content: center; 
+    gap: 10px; 
 }
-
-
-
 
 .js-modal-close {
     border: none;

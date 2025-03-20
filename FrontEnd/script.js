@@ -116,6 +116,21 @@ const closeModal = function (e) {
   modal = null;
 };
 
+function toggleModal() {
+  const galleryModal = document.querySelector(".gallery-modal");
+  const addModal = document.querySelector(".add-modal");
+
+  if (
+    galleryModal.style.display === "block" ||
+    galleryModal.style.display === ""
+  ) {
+    galleryModal.style.display = "none";
+    addModal.style.display = "block";
+  } else {
+    galleryModal.style.display = "block";
+    addModal.style.display = "none";
+  }
+}
 
 // Gestion de l'ajout d'une nouvelle photo
 function handlePictureSubmit() {
