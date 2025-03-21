@@ -5,116 +5,125 @@ const backButton = document.querySelector(".js-modal-back");
 addPhotoButton.addEventListener("click", toggleModal);
 backButton.addEventListener("click", toggleModal);
 
+const modifyButton = document.querySelector(".modify-button");
+
+
 //Récupération des travaux depuis l'API
 fetch(apiURL + "works")
-    .then((response) => { return response.json() })
-    .then((data) => {
-        const gallery = document.querySelector(".gallery");
-        data.forEach(work => {
-            const figure = document.createElement("figure");
-            const image = document.createElement("img");
-            const figCaption = document.createElement("figcaption");
+  .then((response) => { return response.json() })
+  .then((data) => {
+    const gallery = document.querySelector(".gallery");
+    data.forEach(work => {
+      fillMainGallery(work, gallery);
+    });
+  });
 
-            image.src = work.imageUrl;
-            image.alt = work.title;
-            figCaption.innerHTML = work.title;
+const fillMainGallery = (work, gallery) => {
+  const figure = document.createElement("figure");
+  const image = document.createElement("img");
+  const figCaption = document.createElement("figcaption");
 
-            figure.appendChild(image);
-            figure.appendChild(figCaption);
-            gallery.appendChild(figure);
+  image.src = work.imageUrl;
+  image.alt = work.title;
+  figCaption.innerHTML = work.title;
 
-            figure.setAttribute("data-idcat", work.categoryId);
-            figure.setAttribute("class", "workImg");
-            const categoryIdImage = document.getElementsByClassName("workImg");
-            console.log(categoryIdImage);
-            console.log(categoryIdImage.dataset);
-        });
-    })
+  figure.appendChild(image);
+  figure.appendChild(figCaption);
+  gallery.appendChild(figure);
 
-    //Rédupération des catégories depuis l'API
-fetch(apiURL + "categories")
-    .then((response) => { return response.json() })
-    .then((data) => {
-        const categories = document.querySelector(".filters");
-        //Ajout des filtres pour chaque catégorie
-        data.forEach(category => {
-            const filter = document.createElement("div");
-            filter.classList.add("filter");
-            filter.innerHTML = category.name;
-            categories.appendChild(filter);
-            filter.setAttribute("data-id", category.id);
-            //Actionnement filtres au click
-            filter.addEventListener("click", function (event) {
-                console.log(event);
-                const works = document.getElementsByClassName("workImg");
-                console.log(works);
-                Array.from(works).forEach((work)=>{
-                    const workCatId = work.dataset.idcat;
-                    const filterCatId =event.target.dataset.id;
-                    if (filterCatId !== workCatId){
-                        work.style.display="none";
-                    }
-                    else{
-                        work.style.display="block";
-                    }
-                })
-            })
-        });
-        //Actionnement du filtre All
-        const all = document.getElementById("all");
-        console.log(all);
-        all.addEventListener("click", function (event) {
-                const works = document.getElementsByClassName("workImg");
-                console.log(works);
-                Array.from(works).forEach((work)=>{
-                    work.style.display="block";
-                })
-                   
-        })
-    })
-
-    const token = sessionStorage.getItem('authToken');
-if (token){
-    document.querySelector("#header").classList.add("modify");
+  figure.setAttribute("data-idcat", work.categoryId);
+  figure.setAttribute("class", "workImg");
+  const categoryIdImage = document.getElementsByClassName("workImg");
 }
-    
- let modal = null;
+
+//Rédupération des catégories depuis l'API
+fetch(apiURL + "categories")
+  .then((response) => { return response.json() })
+  .then((data) => {
+    const categories = document.querySelector(".filters");
+    //Ajout des filtres pour chaque catégorie
+    data.forEach(category => {
+      const filter = document.createElement("div");
+      filter.classList.add("filter");
+      filter.innerHTML = category.name;
+      categories.appendChild(filter);
+      filter.setAttribute("data-id", category.id);
+      //Actionnement filtres au click
+      filter.addEventListener("click", function (event) {
+        console.log(event);
+        const works = document.getElementsByClassName("workImg");
+        Array.from(works).forEach((work) => {
+          const workCatId = work.dataset.idcat;
+          const filterCatId = event.target.dataset.id;
+          if (filterCatId !== workCatId) {
+            work.style.display = "none";
+          }
+          else {
+            work.style.display = "block";
+          }
+        })
+      })
+    });
+    //Actionnement du filtre All
+    const all = document.getElementById("all");
+    console.log(all);
+    all.addEventListener("click", function (event) {
+      const works = document.getElementsByClassName("workImg");
+      console.log(works);
+      Array.from(works).forEach((work) => {
+        work.style.display = "block";
+      })
+
+    })
+  })
+
+const token = sessionStorage.getItem('authToken');
+if (token) {
+  document.querySelector("#header").classList.add("modify");
+}
+
+let modal = null;
 const focusableSelector = "button, a, input, textarea";
 let focusables = [];
 
 const openModal = function (e) {
   e.preventDefault();
-  modal = document.querySelector(e.target.getAttribute("href"));
-  focusables = Array.from(modal.querySelectorAll(focusableSelector));
-  focusables[0].focus();
-  modal.style.display = null;
-  modal.removeAttribute("aria-hidden");
-  modal.setAttribute("aria-modal", "true");
-  modal.addEventListener("click", closeModal);
-  modal
-    .querySelectorAll(".js-modal-close")
-    .forEach((e) => e.addEventListener("click", closeModal));
-
-  modal
-    .querySelector(".js-modal-stop")
-    .addEventListener("click", stopPropagation);
+  modal = document.querySelector("#modal1");
+  modal.style.display = "flex";
+  /* focusables = Array.from(modal.querySelectorAll(focusableSelector));
+   focusables[0].focus();
+   modal.style.display = null;
+   modal.removeAttribute("aria-hidden");
+   modal.setAttribute("aria-modal", "true");
+   modal.addEventListener("click", closeModal);
+   modal
+     .querySelectorAll(".js-modal-close")
+     .forEach((e) => e.addEventListener("click", closeModal));
+ 
+   modal
+     .querySelector(".js-modal-stop")
+     .addEventListener("click", stopPropagation);*/
 };
+modifyButton.addEventListener("click", openModal);
+
+const crossModal = document.querySelector(".js-modal-close");
 
 const closeModal = function (e) {
   if (modal === null) return;
   e.preventDefault();
   modal.style.display = "none";
-  modal.setAttribute("aria-hidden", "true");
-  modal.removeAttribute("aria-modal");
-  modal.removeEventListener("click", closeModal);
-  modal
-    .querySelector(".js-modal-close")
-    .removeEventListener("click", closeModal);
-  modal
-    .querySelector(".js-modal-stop")
-    .removeEventListener("click", stopPropagation);
-  modal = null;
+  //modal.setAttribute("aria-hidden", "true");
+  /* modal.removeAttribute("aria-modal");
+   modal.removeEventListener("click", closeModal);
+   modal
+     .querySelector(".js-modal-close")
+     .removeEventListener("click", closeModal);
+   modal
+     .querySelector(".js-modal-stop")
+     .removeEventListener("click", stopPropagation);
+   modal = null;*/
 };
+crossModal.addEventListener("click", closeModal);
 
 function toggleModal() {
   const galleryModal = document.querySelector(".gallery-modal");
@@ -131,6 +140,10 @@ function toggleModal() {
     addModal.style.display = "none";
   }
 }
+
+const stopPropagation = function (e) {
+  e.stopPropagation();
+};
 
 // Gestion de l'ajout d'une nouvelle photo
 function handlePictureSubmit() {
