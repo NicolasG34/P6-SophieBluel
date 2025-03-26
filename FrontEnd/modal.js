@@ -73,32 +73,50 @@ function toggleModal() {
 }
 
 fetch(apiURL + "works")
-  .then((response) => { return response.json() })
-  .then((data) => {
-    const gallery = document.querySelector(".modal-gallery");
-    data.forEach(work => {
-      fillModal(work, gallery);
+    .then((response) => { return response.json() })
+    .then((data) => {
+        const gallery = document.querySelector(".modal-gallery");
+        data.forEach(work => {
+            fillModal(work, gallery);
+        });
     });
-  });
 
-
-  const fillModal = (work, gallery) => {
+const fillModal = (work, gallery) => {
     const figure = document.createElement("figure");
     const image = document.createElement("img");
-  
+
     image.src = work.imageUrl;
     image.alt = work.title;
-  
-    figure.appendChild(image);
+
+    // Créer un conteneur pour l'image et l'icône
+    const container = document.createElement("div");
+    container.classList.add("image-container");
+
+    // Ajouter l'image au conteneur
+    container.appendChild(image);
+
+    // Créer l'icône poubelle
+    const trashIcon = document.createElement("i");
+    trashIcon.classList.add("fa-solid", "fa-trash-can"); // Icône Font Awesome
+
+    // Ajouter l'icône poubelle au conteneur
+    container.appendChild(trashIcon);
+
+    // Ajouter le conteneur au figure
+    figure.appendChild(container);
+
+    // Ajouter la figure à la galerie
     gallery.appendChild(figure);
-  
+
+    // Attribuer des classes et attributs
     figure.setAttribute("data-idcat", work.categoryId);
     figure.setAttribute("class", "workImg");
-    const categoryIdImage = document.getElementsByClassName("workImg");
-  }
 
-
-
+    // Event pour la suppression de l'image
+    trashIcon.addEventListener("click", () => {
+        figure.remove(); // Supprimer l'image et l'icône quand l'icône de poubelle est cliquée
+    });
+}
 
 // Gestion de l'ajout d'une nouvelle photo
 function handlePictureSubmit() {

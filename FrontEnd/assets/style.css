@@ -167,7 +167,7 @@ header.modify {
 	flex-direction: row;
 	gap: 25px;
 	margin-top: 8em;
-    align-items: center;
+	align-items: center;
 }
 
 .modify-bar {
@@ -184,7 +184,7 @@ header.modify {
 	gap: 7px;
 }
 
-.modify-button{
+.modify-button {
 	display: none;
 }
 
@@ -196,6 +196,25 @@ header.modify {
 .modal-buttons-container {
 	display: flex;
 	justify-content: space-between;
+}
+
+.image-container {
+	position: relative;
+	
+}
+
+/* Style pour l'icône de la poubelle */
+.image-container i.fa-trash-can {
+	
+	position: absolute;
+    top: 6px; 
+    right: 6px; 
+    font-size: 12px; 
+    cursor: pointer;
+    background-color: black;
+    color: white;
+    padding: 4px;
+    border-radius: 10%;
 }
 
 
