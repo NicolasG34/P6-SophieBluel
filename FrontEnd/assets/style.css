@@ -178,10 +178,14 @@ header.modify {
 	position: absolute;
 	top: 0;
 	left: 0;
-	display: flex;
+	display: none;
 	justify-content: center;
 	align-items: center;
 	gap: 7px;
+}
+
+.modify-button{
+	display: none;
 }
 
 .close-button-container {
