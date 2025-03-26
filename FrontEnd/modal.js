@@ -35,12 +35,26 @@ console.log(openModal);
 
 const crossModal = document.querySelector(".js-modal-close");
 
+
+// Fonction pour fermer le modal
 const closeModal = function (e) {
-    if (modal === null) return;
-    e.preventDefault();
-    modal.style.display = "none";
+    if (modal) {
+        e.preventDefault();
+        modal.style.display = "none";
+    }
 };
-crossModal.addEventListener("click", closeModal);
+
+// Fermer en cliquant sur la croix
+if (crossModal) {
+    crossModal.addEventListener("click", closeModal);
+}
+
+// Fermer en cliquant à l'extérieur du modal
+document.addEventListener("click", (e) => {
+    if (modal && e.target === modal) { // Vérifie si on clique sur l'arrière-plan du modal
+        closeModal(e);
+    }
+});
 
 function toggleModal() {
     const galleryModal = document.querySelector(".gallery-modal");
@@ -58,9 +72,33 @@ function toggleModal() {
     }
 }
 
-const stopPropagation = function (e) {
-    e.stopPropagation();
-};
+fetch(apiURL + "works")
+  .then((response) => { return response.json() })
+  .then((data) => {
+    const gallery = document.querySelector(".modal-gallery");
+    data.forEach(work => {
+      fillModal(work, gallery);
+    });
+  });
+
+
+  const fillModal = (work, gallery) => {
+    const figure = document.createElement("figure");
+    const image = document.createElement("img");
+  
+    image.src = work.imageUrl;
+    image.alt = work.title;
+  
+    figure.appendChild(image);
+    gallery.appendChild(figure);
+  
+    figure.setAttribute("data-idcat", work.categoryId);
+    figure.setAttribute("class", "workImg");
+    const categoryIdImage = document.getElementsByClassName("workImg");
+  }
+
+
+
 
 // Gestion de l'ajout d'une nouvelle photo
 function handlePictureSubmit() {
