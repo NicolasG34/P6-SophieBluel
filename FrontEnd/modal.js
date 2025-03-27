@@ -89,32 +89,37 @@ const fillModal = (work, gallery) => {
     image.alt = work.title;
 
     // Créer un conteneur pour l'image et l'icône
-    const container = document.createElement("div");
-    container.classList.add("image-container");
+    figure.classList.add("image-container");
 
     // Ajouter l'image au conteneur
-    container.appendChild(image);
+    figure.appendChild(image);
 
     // Créer l'icône poubelle
     const trashIcon = document.createElement("i");
     trashIcon.classList.add("fa-solid", "fa-trash-can"); // Icône Font Awesome
 
     // Ajouter l'icône poubelle au conteneur
-    container.appendChild(trashIcon);
-
-    // Ajouter le conteneur au figure
-    figure.appendChild(container);
+    figure.appendChild(trashIcon);
 
     // Ajouter la figure à la galerie
     gallery.appendChild(figure);
 
     // Attribuer des classes et attributs
-    figure.setAttribute("data-idcat", work.categoryId);
-    figure.setAttribute("class", "workImg");
+    figure.setAttribute("data-id", work.id);
+    figure.classList.add("workImg");
 
     // Event pour la suppression de l'image
-    trashIcon.addEventListener("click", () => {
-        figure.remove(); // Supprimer l'image et l'icône quand l'icône de poubelle est cliquée
+    trashIcon.addEventListener("click", (event) => {
+        const workId = event.target.parentElement.dataset.id;
+        fetch(apiURL + "works/"+ workId, {
+            method:"DELETE", 
+            headers:{
+                Authorization:"Bearer " + token
+            }
+        })
+            .then((response) => { if (response.ok ){
+                figure.remove(); // Supprimer l'image et l'icône quand l'icône de poubelle est cliquée
+            } })
     });
 }
 

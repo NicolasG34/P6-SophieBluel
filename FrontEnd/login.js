@@ -37,9 +37,6 @@ async function connexion(event) {
       const token = result.token;
       sessionStorage.setItem("authToken", token);
       window.location.href = "index.html";
-      modifyBar = document.querySelector(".modify-bar");
-      modifyBar.style.display = "flex";
-      console.log(modifyBar);
 
     }
   } catch (error) {
