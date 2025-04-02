@@ -1,5 +1,6 @@
 //const apiURL = "http://localhost:5678/api/";
 
+handlePictureSubmit();
 const addPhotoButton = document.querySelector(".add-photo-button");
 const backButton = document.querySelector(".js-modal-back");
 addPhotoButton.addEventListener("click", toggleModal);
@@ -184,13 +185,13 @@ function handlePictureSubmit() {
                 console.error("Token d'authentification manquant.");
                 return;
             }
-
-            let response = await fetch(`${url}/works`, {
+            console.log("Auth Token:", sessionStorage.authToken);
+            let response = await fetch(`${apiURL}works`, {
                 method: "POST",
                 headers: {
-                    Authorization: "Bearer " + token,
+                    Authorization: "Bearer " + token
                 },
-                body: formData,
+                body: formData
             });
             if (response.status !== 201) {
                 const errorText = await response.text();
@@ -204,4 +205,6 @@ function handlePictureSubmit() {
             alert("Veuillez remplir tous les champs");
         }
     });
+
 }
+
