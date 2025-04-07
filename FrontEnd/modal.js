@@ -1,5 +1,3 @@
-//const apiURL = "http://localhost:5678/api/";
-
 handlePictureSubmit();
 const addPhotoButton = document.querySelector(".add-photo-button");
 const backButton = document.querySelector(".js-modal-back");
@@ -8,6 +6,7 @@ backButton.addEventListener("click", toggleModal);
 
 const modifyButton = document.querySelector(".modify-button");
 
+// Si l'utilisateur est connecté, le mode édition s'affiche
 const token = sessionStorage.getItem('authToken');
 if (token) {
     document.querySelector("#header").classList.add("modify");
@@ -25,6 +24,7 @@ let modal = null;
 const focusableSelector = "button, a, input, textarea";
 let focusables = [];
 
+// Fonction pour fermer la modale
 const openModal = function (e) {
     e.preventDefault();
     modal = document.querySelector("#modal1");
@@ -32,12 +32,11 @@ const openModal = function (e) {
 
 };
 modifyButton.addEventListener("click", openModal);
-console.log(openModal);
 
 const crossModal = document.querySelector(".js-modal-close");
 
 
-// Fonction pour fermer le modal
+// Fonction pour fermer la modale
 const closeModal = function (e) {
     if (modal) {
         e.preventDefault();
@@ -50,9 +49,9 @@ if (crossModal) {
     crossModal.addEventListener("click", closeModal);
 }
 
-// Fermer en cliquant à l'extérieur du modal
+// Fermer en cliquant à l'extérieur de la modale
 document.addEventListener("click", (e) => {
-    if (modal && e.target === modal) { // Vérifie si on clique sur l'arrière-plan du modal
+    if (modal && e.target === modal) { 
         closeModal(e);
     }
 });
@@ -82,6 +81,7 @@ fetch(apiURL + "works")
         });
     });
 
+// Fonction qui remplit la modale des works de l'api
 const fillModal = (work, gallery) => {
     const figure = document.createElement("figure");
     const image = document.createElement("img");
@@ -171,6 +171,7 @@ function handlePictureSubmit() {
 
     const addPictureForm = document.getElementById("picture-form");
 
+//Fonction qui permet d'ajouter une image dynaimuqment
     addPictureForm.addEventListener("submit", async (event) => {
         event.preventDefault();
         const hasImage = document.querySelector("#photo-container").firstChild;

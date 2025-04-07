@@ -10,6 +10,7 @@ fetch(apiURL + "works")
     });
   });
 
+//Remplissage de la gallerie du site depuis l'api
 const fillMainGallery = (work, gallery) => {
   const figure = document.createElement("figure");
   const image = document.createElement("img");

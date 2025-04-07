@@ -5,20 +5,20 @@ document.getElementById("loginForm").addEventListener("submit", connexion);
 async function connexion(event) {
   event.preventDefault();
 
-  // Get user input
+  // Stocke les informations de l'utilisateur
   let user = {
     email: document.getElementById("email").value,
     password: document.getElementById("password").value,
   };
 
-  // Basic validation 
+  // Si les informations sont bonnes, renvoie sur index.html sinon message d'erreur
   if (!user.email || !user.password) {
     alert("Veuillez remplir tous les champs.");
     return;
   }
 
   try {
-    // Send login request
+
     let response = await fetch(apiLogin, {
       method: "POST",
       headers: {
@@ -40,7 +40,7 @@ async function connexion(event) {
 
     }
   } catch (error) {
-    // Handle network or other errors
+  
     console.error("Erreur de connexion:", error);
     const errorMessage = document.createElement("div");
     errorMessage.className = "error-login";
