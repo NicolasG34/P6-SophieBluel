@@ -112,15 +112,17 @@ const fillModal = (work, gallery) => {
     // Event pour la suppression de l'image
     trashIcon.addEventListener("click", (event) => {
         const workId = event.target.parentElement.dataset.id;
-        fetch(apiURL + "works/"+ workId, {
-            method:"DELETE", 
-            headers:{
-                Authorization:"Bearer " + token
+        fetch(apiURL + "works/" + workId, {
+            method: "DELETE",
+            headers: {
+                Authorization: "Bearer " + token
             }
         })
-            .then((response) => { if (response.ok ){
-                figure.remove(); // Supprimer l'image et l'icône quand l'icône de poubelle est cliquée
-            } })
+            .then((response) => {
+                if (response.ok) {
+                    figure.remove(); // Supprimer l'image et l'icône quand l'icône de poubelle est cliquée
+                }
+            })
     });
 }
 
@@ -186,25 +188,31 @@ function handlePictureSubmit() {
                 return;
             }
             console.log("Auth Token:", sessionStorage.authToken);
-            let response = await fetch(`${apiURL}works`, {
+            await fetch(`${apiURL}works`, {
                 method: "POST",
                 headers: {
                     Authorization: "Bearer " + token
                 },
                 body: formData
-            });
-            if (response.status !== 201) {
-                const errorText = await response.text();
-                console.error("Erreur : ", errorText);
-                const errorBox = document.createElement("div");
-                errorBox.className = "error-login";
-                errorBox.innerHTML = `Il y a eu une erreur : ${errorText}`;
-                document.querySelector("form").prepend(errorBox);
-            }
+            }).then((response) => {
+                if (!response.ok) {
+                    const errorText = response.text();
+                    console.error("Erreur : ", errorText);
+                    const errorBox = document.createElement("div");
+                    errorBox.className = "error-login";
+                    errorBox.innerHTML = `Il y a eu une erreur : ${errorText}`;
+                    document.querySelector("form").prepend(errorBox);
+                }
+                else {
+                    return response.json();
+                }
+            }).then((data) => {
+                const gallery = document.querySelector(".gallery");
+                fillMainGallery(data,gallery);
+                })
         } else {
             alert("Veuillez remplir tous les champs");
         }
     });
 
 }
-
