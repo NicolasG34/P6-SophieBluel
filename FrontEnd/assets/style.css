@@ -234,6 +234,12 @@ header.modify {
 	font-size: 18px;
 }
 
+.js-modal-close2 {
+	border: none;
+	background-color: white;
+	font-size: 18px;
+}
+
 .js-modal-back {
 	border: none;
 	background-color: white;
