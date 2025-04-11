@@ -25,6 +25,7 @@ const fillMainGallery = (work, gallery) => {
   gallery.appendChild(figure);
 
   figure.setAttribute("data-idcat", work.categoryId);
+  figure.setAttribute("data-workid", work.id);
   figure.setAttribute("class", "workImg");
   const categoryIdImage = document.getElementsByClassName("workImg");
 }

@@ -153,6 +153,8 @@ const fillModal = (work, gallery) => {
             .then((response) => {
                 if (response.ok) {
                     figure.remove(); // Supprimer l'image et l'icône quand l'icône de poubelle est cliquée
+                    let element = document.querySelector('[data-workid="'+workId+'"]');
+                    element.remove();
                 }
             })
     });
@@ -252,3 +254,4 @@ function handlePictureSubmit() {
         }
     });
 }
+
