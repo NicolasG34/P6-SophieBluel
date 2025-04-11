@@ -1,31 +1,60 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
+    <!-- Déclaration du charset pour la page -->
     <meta charset="UTF-8">
+
+    <!-- Titre de la page affiché dans l'onglet du navigateur -->
     <title>Sophie Bluel - Architecte d'intérieur</title>
+
+    <!-- Définition de la zone visible pour les appareils mobiles (responsive design) -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Préconnexion pour optimiser le chargement des polices -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+
+    <!-- Inclusion des polices Google Fonts pour le design -->
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
+        rel="stylesheet">
+
+    <!-- Intégration de l'icône de font awesome (pour les icônes) -->
     <script src="https://kit.fontawesome.com/8f2991717e.js" crossorigin="anonymous"></script>
+
+    <!-- Description de la page (utile pour les moteurs de recherche) -->
     <meta name="description" content="">
+
+    <!-- Lien vers le CSS -->
     <link rel="stylesheet" href="./assets/style.css">
+
+    <!-- Inclusion du fichier JavaScript pour la gestion de la connexion utilisateur -->
     <script src="../FrontEnd/login.js" defer></script>
-    
+
 </head>
+
 <body>
+    <!-- En-tête du site avec le logo et la navigation -->
     <header>
-        <a href="index.html"><h1>Sophie Bluel <span>Architecte d'intérieur</span></h1></a>
+        <!-- Le lien qui redirige vers la page d'accueil -->
+        <a href="index.html">
+            <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+        </a>
+
+        <!-- Navigation principale du site -->
         <nav>
             <ul>
                 <li>
+                    <!-- Lien vers la section "portfolio" de la page d'accueil -->
                     <a href="index.html#portfolio">projets</a>
                 </li>
                 <li>
+                    <!-- Lien vers la section "contact" de la page d'accueil -->
                     <a href="index.html#contact">contact</a>
                 </li>
-                <li class="login-link">login</li>
+                <li><a class="login-link" href="login.html">login</a></li> <!-- État du lien de connexion -->
                 <li>
+                    <!-- Lien vers le profil Instagram -->
                     <a href="https://www.instagram.com/">
                         <img class="insta" src="./assets/icons/instagram.png" alt="Instagram">
                     </a>
@@ -33,23 +62,38 @@
             </ul>
         </nav>
     </header>
+
+    <!-- Section principale pour la page de connexion -->
     <main>
         <section class="login">
             <h2>Log In</h2>
+
+            <!-- Formulaire de connexion -->
             <form id="loginForm" method="POST" action="#">
                 <label for="email">E-mail</label>
+                <!-- Champ pour saisir l'adresse e-mail -->
                 <input type="email" name="email" id="email" autocomplete="email">
+
                 <label for="password">Mot de passe</label>
+                <!-- Champ pour saisir le mot de passe -->
                 <input type="password" name="password" id="password" autocomplete="current-password">
+
+                <!-- Bouton pour se connecter -->
                 <input type="submit" id="login-submit" value="Se connecter">
             </form>
+
+            <!-- Lien pour réinitialiser le mot de passe (non fonctionnel ici) -->
             <a href="#" class="login__fpassword">Mot de passe oublié</a>
         </section>
     </main>
+
+    <!-- Footer -->
     <footer>
         <div class="container">
+            <!-- Lien vers les mentions légales -->
             <p class="info_hover">Mentions légales</p>
         </div>
     </footer>
 </body>
+
 </html>

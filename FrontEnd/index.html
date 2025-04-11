@@ -2,26 +2,35 @@
 <html lang="fr">
 
 <head>
+	<!-- Définition du charset et du titre de la page -->
 	<meta charset="UTF-8">
 	<title>Sophie Bluel - Architecte d'intérieur</title>
+	<!-- Définition de la vue responsive pour une meilleure expérience mobile -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Connexion aux Google Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
 		rel="stylesheet">
+	<!-- Intégration de Font Awesome pour les icônes -->
 	<script src="https://kit.fontawesome.com/2df4fe767c.js" crossorigin="anonymous"></script>
 </head>
+
 <meta name="description" content="">
-<link rel="stylesheet" href="./assets/style.css">
+<link rel="stylesheet" href="./assets/style.css"> <!-- Fichier CSS principal -->
 </head>
 
 <body>
+	<!-- Barre de modification affichée uniquement en mode édition -->
 	<div class="modify-bar">
 		<i class="fa-solid fa-pen-to-square"></i>
 		Mode édition
 	</div>
+
+	<!-- Modale pour afficher les images de la galerie -->
 	<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titlemodal">
 		<div class="modal-wrapper js-modal-stop">
+			<!-- Galerie photo -->
 			<div class="gallery-modal">
 				<div class="close-button-container">
 					<button class="js-modal-close">
@@ -29,13 +38,14 @@
 					</button>
 				</div>
 				<h3>Galerie Photo</h3>
-				<div class="modal-gallery"></div>
+				<div class="modal-gallery"></div> <!-- Zone d'affichage des images -->
 				<hr />
 				<div class="modal-button-container">
 					<button class="add-photo-button">Ajouter une photo</button>
 				</div>
 			</div>
 
+			<!-- Modal pour l'ajout d'une photo -->
 			<div class="add-modal" style="display: none;">
 				<div class="modal-buttons-container">
 					<button class="js-modal-back">
@@ -71,6 +81,8 @@
 			</div>
 		</div>
 	</aside>
+
+	<!-- Header de la page, contient le titre et le menu -->
 	<header id="header">
 		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 		<nav>
@@ -78,15 +90,18 @@
 				<li>projets</li>
 				<li>contact</li>
 				<li>
-					<a class="login-link" href="./login.html">login</a>
+					<a class="login-link" href="./login.html">login</a> <!-- Lien vers la page de connexion -->
+				</li>
 				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 			</ul>
 		</nav>
 	</header>
+
+	<!-- Contenu principal -->
 	<main>
 		<section id="introduction">
 			<figure>
-				<img src="./assets/images/sophie-bluel.png" alt="">
+				<img src="./assets/images/sophie-bluel.png" alt="Image de Sophie Bluel">
 			</figure>
 			<article>
 				<h2>Designer d'espace</h2>
@@ -99,21 +114,25 @@
 					décorateur(trice)</p>
 			</article>
 		</section>
+
+		<!-- Portfolio des projets -->
 		<section id="portfolio">
 			<div class="portfolio--title">
 				<h2>Mes projets</h2>
 				<div class="modify-button">
 					<i class="fa-solid fa-pen-to-square"></i>
-					<a>modifier</a>
+					<a>modifier</a> <!-- Bouton pour activer la modification -->
 				</div>
 			</div>
 			<div class="filters">
-				<div class="filter" id="all">Tous</div>
+				<div class="filter" id="all">Tous</div> <!-- Filtre "Tous" pour afficher toutes les images -->
 			</div>
 			<div class="gallery">
-
+				<!-- Zone pour afficher les images du portfolio -->
 			</div>
 		</section>
+
+		<!-- Section de contact -->
 		<section id="contact">
 			<h2>Contact</h2>
 			<p>Vous avez un projet ? Discutons-en !</p>
@@ -129,6 +148,7 @@
 		</section>
 	</main>
 
+	<!-- Footer avec le lien vers les mentions légales -->
 	<footer>
 		<nav>
 			<ul>
@@ -139,5 +159,6 @@
 </body>
 
 </html>
-<script src="./script.js"></script>
-<script src="./modal.js"></script>
+
+<script src="./script.js"></script> <!-- Script pour la logique de la page -->
+<script src="./modal.js"></script> <!-- Script pour gérer la modale -->

@@ -1,108 +1,106 @@
+// Lance la configuration du formulaire d'ajout d'image
 handlePictureSubmit();
+
+// Sélection des éléments du DOM
 const addPhotoButton = document.querySelector(".add-photo-button");
 const backButton = document.querySelector(".js-modal-back");
+const modifyButton = document.querySelector(".modify-button");
+
+// Ajout d'EventListener pour gérer l'ouverture et la navigation entre les modales
 addPhotoButton.addEventListener("click", toggleModal);
 backButton.addEventListener("click", toggleModal);
 backButton.addEventListener("click", resetAddWorkForm);
-const loginLink = document.querySelector("#login-link");
 
-const modifyButton = document.querySelector(".modify-button");
-
-
+// Fonction pour réinitialiser le formulaire d'ajout d'image
 function resetAddWorkForm() {
-    document.getElementById("picture-form").reset(); // Vide les champs
-    document.getElementById("photo-container").innerHTML = ""; // Supprime l’image affichée
-    document
-        .querySelectorAll(".picture-loaded") // Réaffiche les éléments masqués
-        .forEach((e) => (e.style.display = "block"));
+    document.getElementById("picture-form").reset(); // Réinitialise les champs
+    document.getElementById("photo-container").innerHTML = ""; // Supprime la prévisualisation
+    document.querySelectorAll(".picture-loaded").forEach((e) => (e.style.display = "block")); // Réaffiche les éléments
 }
 
-// Si l'utilisateur est connecté, le mode édition s'affiche
+// Vérifie si l'utilisateur est connecté (présence du token)
 const token = sessionStorage.getItem('authToken');
 if (token) {
+    // Active l'affichage du mode édition
     document.querySelector("#header").classList.add("modify");
+
     showModifyBar = document.querySelector(".modify-bar");
     showModifyBar.style.display = "flex";
 
     showModifyButton = document.querySelector(".modify-button");
     showModifyButton.style.display = "flex";
-    
+
     showFilters = document.querySelector(".filters");
     showFilters.style.display = "none";
-    showFilters = document.querySelector(".portfolio--title");
-    showFilters.style.margin = "5em";
 
+    showPortfolio = document.querySelector(".portfolio--title");
+    showPortfolio.style.margin = "5em";
+
+    // Transforme le bouton login en logout
     const loginLink = document.querySelector(".login-link");
     loginLink.innerHTML = "logout";
-    loginLink.setAttribute("href","index.html");
+    loginLink.setAttribute("href", "index.html");
     loginLink.addEventListener("click", (event) => {
-        sessionStorage.removeItem('authToken');
+        sessionStorage.removeItem('authToken'); // Déconnexion
     });
-    console.log(loginLink);
 }
 
+// Initialisation de la modale
 let modal = null;
 const focusableSelector = "button, a, input, textarea";
-let focusables = [];
 
-// Fonction pour fermer la modale
+// Fonction pour ouvrir la modale
 const openModal = function (e) {
     e.preventDefault();
     modal = document.querySelector("#modal1");
     modal.style.display = "flex";
-
 };
 modifyButton.addEventListener("click", openModal);
 
+// Sélection des boutons de fermeture de la modale
 const crossModal = document.querySelector(".js-modal-close");
 const crossModal2 = document.querySelector(".js-modal-close2");
 
 // Fonction pour fermer la modale
 const closeModal = function (e) {
-    if (e) {
-        e.preventDefault();  // Empêche le comportement par défaut seulement si `e` est défini
-    }
+    if (e) e.preventDefault();
+
     const galleryModal = document.querySelector(".gallery-modal");
     const addModal = document.querySelector(".add-modal");
 
     galleryModal.style.display = "block";
-    
     addModal.style.display = "none";
+
     modal = document.querySelector("#modal1");
     if (modal) {
         modal.style.display = "none";
-        resetAddWorkForm();
+        resetAddWorkForm(); // Réinitialisation du formulaire au passage
     }
 };
 
-// Fermer en cliquant sur la croix
+// Ajout des fermetures par croix
 if (crossModal) {
     crossModal.addEventListener("click", closeModal);
 }
-
 if (crossModal2) {
-    crossModal2.addEventListener("click",() =>{
+    crossModal2.addEventListener("click", () => {
         closeModal();
-       // toggleModal();
     });
-
 }
 
 // Fermer en cliquant à l'extérieur de la modale
 document.addEventListener("click", (e) => {
-    if (modal && e.target === modal) { 
+    if (modal && e.target === modal) {
         closeModal(e);
     }
 });
 
+// Fonction qui bascule entre les vues "galerie" et "ajout"
 function toggleModal() {
     const galleryModal = document.querySelector(".gallery-modal");
     const addModal = document.querySelector(".add-modal");
 
-    if (
-        galleryModal.style.display === "block" ||
-        galleryModal.style.display === ""
-    ) {
+    if (galleryModal.style.display === "block" || galleryModal.style.display === "") {
         galleryModal.style.display = "none";
         addModal.style.display = "block";
     } else {
@@ -111,8 +109,9 @@ function toggleModal() {
     }
 }
 
+// Récupère les travaux depuis l'API et les affiche dans la modale
 fetch(apiURL + "works")
-    .then((response) => { return response.json() })
+    .then((response) => response.json())
     .then((data) => {
         const gallery = document.querySelector(".modal-gallery");
         data.forEach(work => {
@@ -120,37 +119,28 @@ fetch(apiURL + "works")
         });
     });
 
-
-    
-// Fonction qui remplit la modale des works de l'api
+// Fonction pour remplir la galerie modale avec les images
 const fillModal = (work, gallery) => {
     const figure = document.createElement("figure");
     const image = document.createElement("img");
 
     image.src = work.imageUrl;
     image.alt = work.title;
-
-    // Créer un conteneur pour l'image et l'icône
     figure.classList.add("image-container");
 
-    // Ajouter l'image au conteneur
     figure.appendChild(image);
 
-    // Créer l'icône poubelle
+    // Création de l’icône de suppression
     const trashIcon = document.createElement("i");
-    trashIcon.classList.add("fa-solid", "fa-trash-can"); // Icône Font Awesome
-
-    // Ajouter l'icône poubelle au conteneur
+    trashIcon.classList.add("fa-solid", "fa-trash-can");
     figure.appendChild(trashIcon);
 
-    // Ajouter la figure à la galerie
     gallery.appendChild(figure);
 
-    // Attribuer des classes et attributs
     figure.setAttribute("data-id", work.id);
     figure.classList.add("workImg");
 
-    // Event pour la suppression de l'image
+    // Suppression de l’image au clic sur l’icône
     trashIcon.addEventListener("click", (event) => {
         const workId = event.target.parentElement.dataset.id;
         fetch(apiURL + "works/" + workId, {
@@ -158,23 +148,25 @@ const fillModal = (work, gallery) => {
             headers: {
                 Authorization: "Bearer " + token
             }
-        })
-            .then((response) => {
-                if (response.ok) {
-                    figure.remove(); // Supprimer l'image et l'icône quand l'icône de poubelle est cliquée
-                    let element = document.querySelector('[data-workid="'+workId+'"]');
-                    element.remove();
-                }
-            })
+        }).then((response) => {
+            if (response.ok) {
+                figure.remove();
+                let element = document.querySelector('[data-workid="' + workId + '"]');
+                if (element) element.remove();
+            }
+        });
     });
 }
 
+// Gère le comportement du formulaire d'ajout de photo
 function handlePictureSubmit() {
     const img = document.createElement("img");
     const fileInput = document.getElementById("file");
     let file;
+
     fileInput.style.display = "none";
 
+    // Prévisualisation de l’image sélectionnée
     fileInput.addEventListener("change", function (event) {
         file = event.target.files[0];
         const maxFileSize = 4 * 1024 * 1024;
@@ -199,6 +191,7 @@ function handlePictureSubmit() {
         }
     });
 
+    // Gestion des champs titre et catégorie
     const titleInput = document.getElementById("title");
     let titleValue = "";
     let selectedValue = "1";
@@ -211,6 +204,7 @@ function handlePictureSubmit() {
         titleValue = titleInput.value;
     });
 
+    // Soumission du formulaire
     const addPictureForm = document.getElementById("picture-form");
 
     addPictureForm.addEventListener("submit", async (event) => {
@@ -248,11 +242,12 @@ function handlePictureSubmit() {
                     return;
                 }
 
+                // Mise à jour des galeries après ajout
                 const data = await response.json();
                 const gallery = document.querySelector(".gallery");
                 const galleryModal = document.querySelector(".modal-gallery");
                 fillMainGallery(data, gallery);
-                fillModal(data,galleryModal);
+                fillModal(data, galleryModal);
                 resetAddWorkForm();
                 closeModal();
 
@@ -264,4 +259,3 @@ function handlePictureSubmit() {
         }
     });
 }
-
