@@ -62,7 +62,12 @@ const closeModal = function (e) {
     if (e) {
         e.preventDefault();  // Empêche le comportement par défaut seulement si `e` est défini
     }
+    const galleryModal = document.querySelector(".gallery-modal");
+    const addModal = document.querySelector(".add-modal");
 
+    galleryModal.style.display = "block";
+    
+    addModal.style.display = "none";
     modal = document.querySelector("#modal1");
     if (modal) {
         modal.style.display = "none";
@@ -76,7 +81,11 @@ if (crossModal) {
 }
 
 if (crossModal2) {
-    crossModal2.addEventListener("click", closeModal);
+    crossModal2.addEventListener("click",() =>{
+        closeModal();
+       // toggleModal();
+    });
+
 }
 
 // Fermer en cliquant à l'extérieur de la modale
@@ -241,8 +250,9 @@ function handlePictureSubmit() {
 
                 const data = await response.json();
                 const gallery = document.querySelector(".gallery");
+                const galleryModal = document.querySelector(".modal-gallery");
                 fillMainGallery(data, gallery);
-
+                fillModal(data,galleryModal);
                 resetAddWorkForm();
                 closeModal();
 
